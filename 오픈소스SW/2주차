@@ -1,0 +1,61 @@
+cd,type :내장 명령어(shell안에 내장되어있는)
+cp,ls : 외장 명령어(외부프로그램)
+
+#명령어
+*type : 명령어 이름이 어떻게 표시되는지 확인 (내장인지 외장인지)
+*which : 실행 프로그림의 위치 표시( 어떤 프로그램이 실행되서 뒤에 쓰는 명령어 수행되는지 [내장 명령어는 아무결과도 안보여줌]
+*man(메뉴얼) : 명령어의 메뉴얼 페이지 표시 
+예) man ls 하면 ls명령어 도움말 사용
+리눅스 section 8개 있는데
+1. 사용자 명령어 (mv 등..)
+2. 커널 시스템 call ( c function) [open,read등..]
+3. C library call (fopen 등..)
+4. 장치노드-파일
+5. file format
+6. game,media file 도움말
+7. 그 외
+8. 시스템 관리용
+예) open이라는게 많은데 c function call 알고 싶다하면 man 2 open라 하면 된다.
+*apropos : 적합한 명령어 리스트 표시 (예를 들어 apropos floopy하면 floopy 라는 장치 혹은 대상 관계된 매칭되는 명령어가 어디있나 알려줌)
+*whatis : 명령어에 대한 짧은 설명 표시
+*help : 도움말 알려줌 ( 예를들어 mkdir --help 라하면 도움말 나옴)
+* alias : 명령어에 별칭 붙이기 ( 예를들어 alias foo = 'cd /usr;ls;cd~' 여기서 우선 ; 는 차례대로 수해하는 것이고 foo라는 별칭을 붙여서 foo라고 만치면 usr에 있는 ls을 보여주고 ~로가는
+것이라고 별칭을 지은 것이다. unalias는 별칭을 제거하는 것이다.
+그냥 alias라 치면 별칭 붙어있는 리스트 나옴
+(*less는 내용보여주는건데 1페이지씩
+내용 나올때 space : 페이지 올라감, b : 페이지앞, j : 한줄씩 내려감, k : 한줄씩 올라감, q : 끝남)
+
+#기본배경
+1개 프로그램은 1개 프로세서 만들어져 수행된다. 1개 프로세서라 함은 stdin(천공카드 -> 키보드),stdout,stderr(이놈둘은 프린트 - > 화면 모니터) 파일이 열려있다.
+
+#Redirection
+예) ~$ ls -l /usr/bin >(이게 redirection) ls -output.txt 즉  ls -l /usr/bin이 만들어내는 stdout출력을 ls -output.txt(이건 파일 자체 이름)로 보내진다 저 만든파일은 ~밑으로 간다.
+저장이 redirection(파일에 기록되는거 text여서 색깔은 ㄴ) 기능임
+잘못된경로 되면 stderr여서(모니터는 err든 out이든 같으니까) 크기 0 이라 화면 출력은 되는데 redirection이라고 저장은 안됨
+근데 2> 이렇게 하면 크기 0이 아니라 에러메시지가 저장 &>는 stdout,strerr가 같이 찍힘 >>(append) 파일 위에 덮어쓴다.
+ls -l /usr/bin > /dev/null하면 실은 되지만 출력은 안됨
+
+
+*cat : 파일 연결하기 파일 내용 (두개 연달아 적으면 차례대로 출력)
+cat file(파일이름) 이러면 stdout으로 출력이되고 cat (file이름 안주기) 하면 stdin즉 내용을 입력받는다 (이경우 EOF(end-of-file)하면 종료됨 키보드로 컨트롤d누르면됨)
+cat (파일이름안줌) > lazy-dog.txt하면 stdin으로 입력한 내용을 lazy-dog.txt으로 출력(파일에기록)
+cat < file 이렇게하면 file의 내용이 cat의 input으로 들어가서 cat이 stdout을 출력
+
+pipe
+a | b a의 출력을 b의 입력으로 a | b | c의 형태도 가능
+예) ls /bin /usr/bin | sort | less : 이것은 맨앞 두폴더 디렉토리 리스트를 정력해서 한페이지씩 보여준다.
+
+*uniq : 중복을 제거
+*wc(word count) : 차례대로 줄수, 단어수 , byte ( wc -l하면 라인수만)
+
+*grep : 패턴과 일치하는 라인 출력 grep zip 앞파일중 zip이 들어간 목록 알려줌
+*head와tail : 파일앞부분과 뒷부분을 보여줌 기본적으로 10줄나오게되는데 5줄 나오게 하려면 head -n 5 file이름 이런식으로 하면됨
+
+*tee : 표준 입력을 읽고 표준 출력 및 파일에 쓰기
+예) ls /usr/bin | tee ls.txt | grep zip
+결과 : /usr/bin내용이 출력될때 grep니까 zip을 찾아주면서 출력하는 동시에 파일내용도 ls.txt라는 파일을 만들어 내용 저장한다.
+
+
+
+
+
