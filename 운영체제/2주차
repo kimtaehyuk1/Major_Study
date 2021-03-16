@@ -24,3 +24,15 @@ context는 heap과stack(동적)을 의미한다.
 3. SMP (shared memory process) 프로세서 (멀티코어) 메모리 하나 공유하고
 4. Distributed(분산) Operating System : 은행,서버 같이 뒤엔 여러 컴퓨터 있는데 1개인것 처럼 보이는거
 5. Object-Oriented Design : 자바의 클래스가 있는거처럼 운영체제에도 클래스 개념을 넣어서 짠거 --> 너무 느리다.
+
+*이런게 나왔구나 하는 정도만 여기 기억
+User level(어플리케이션 돌아감) 여기서 라이브러리 있고
+중간에 Trap(signal)이라고 System call 부를때 핸들링해서 잘못 오는거 막는거 정도(interrupt와 비슷)[interupts 는 하드웨어 오류 제어]정확히 CPU오류는 Trap으로
+Kernel level(운영체제 돌아감)
+여기에 젤 중요한 System call interface가 있는데 AMI로 커널모드 수행하기 위해 운영체제 호출하는거
+파일시스템이 있어 모든 부분을 파일로서 접근하고 다룬다, 또 젤 중요한 프로세서 컨트롤 시스템이 있는데 크게 IPC(프로세서간 통신), 스케쥴러(어떤거 돌릴꺼냐), 메모리 운영 등이있다.
+디바이스 드라이버를 다루는 방법중 Character적인것과 Block(이놈은 버퍼 캐쉬 필요)적인게 있는데 
+맨밑 하드웨어 컨트롤하는거 있다 이건 디바이스 드라이빙
+
+커널모듈(자세힌 ㄴ)
+모듈로서 나눠서 보고, 부팅 안해도 붙였다 뗏다가능, 특징으로는 Dynamic Linking,Stackable modules이있따.
