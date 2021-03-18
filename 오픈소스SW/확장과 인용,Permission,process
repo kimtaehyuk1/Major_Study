@@ -1,0 +1,120 @@
+echo 하면 그냥 뒤에 있는거 문자열을 화면에 찍어주는거(단순 디렉토리 명이나 문자열만 화면출력 아니라 산술식도 계산)
+~$ ls * 하면 홈디렉토리 안의 디렉토리 리스트 보여줌
+근데 echo* 하면 ls * 나왔던것들 그냥 똑같이 보여줌(리스트화됨)
+echo[[:upper:]]* 대문자로 시작하는거 list
+
+echo $((2+2))하면 4출력
+/는 정수몫만 %는나머지 5**2는 5의제곱
+$(($((5**2))*3)) = 75
+문자열과 섞어서도 표현가능
+
+echo Front-{A,B,C}-Back(A,B,C띄워쓰면 안됨) 하면 Front-A-Back Front-B-Back Front-C-Back이 출력
+echo Number_{1..5} 라하면 Number_1 Number_2 이런식으로 계속 나옴
+echo a{A{1,2},B{3,4}}b 라하면 aA1b aA2b aB3b aB4b 이렇게 나옴
+
+mkdir {2009..2011}-0{1..9}{2009..2011}-{10..12} 하면 2009-01 부터 2011-12까지 쭉 나옴
+
+echo $USER 하면 유저명 알 수 있다.
+printenv 하면 환경변수가 출력 printenv | less 하면 내용 자세히 볼 수 있다.
+$ 뒤에 환경변수 -> shell에 지정할 수 있다.
+
+예) cp어딧는지 찾으려고 which cp 후 ls -l /bin/cp 이렇게 말고
+바로 ls -l $(which cp)하면 됨
+
+file $(ls /usr/bin/* | grep zip) 저 경로에 zip이 들어가있는 파일 리스트를 보여주고 설명해라
+ls -l 'which cp' ''이거 안이 수행된다. 실행결과는 문자열
+
+echo 스페이스 존나 띄워도 무시됨 하지만 ""이거 안에 만들면 무시안됨.
+echo The total is $100.00 이라 하면  The total is 00.00으로 출력된다 $1이 인지인데 여기서 없어서
+
+echo "$(cal)" 이렇게 해야 cal을 찍을떄 white space 무시되지 않고 출력
+
+월래 &는 백그라운드 프로세서 실행인데 \&하면 그냥 &만 출력
+
+
+*Permission
+history 치면 이떄까지 명령어 다보임
+history | less 내용 한페이지보여줌
+history | tail 최근꺼 history | head 옛날꺼
+!538하면 538번째 썼던 명령어 수행
+!!가장 최근 명령어 재실행
+!hi : hi시작한 가장 최근
+
+file은 user,group,others가 있고 각각이 권한 부여 대상이다.
+예를들어 etc/shadow 라고 있는데 user와 group이 나와 다르다 그럼 난 others의 권한을 갖는다
+ 
+ uid = user id
+ gid = group id
+ 리눅스에선 이렇게 서로의 구분을 id로 한다.
+ 
+ 파일종류
+ .은 현재 디렉토리, /dev/srO (cd rom), /dev/tty (터미널)
+ 
+ ls -l 에서 맨앞 d,-,l말고 b와c 있는데
+ b는 block장치로 장치간 데이터 주고 받을때 byte단위가 아니라 그것들이 모인 sector단위로 disk저장 이런걸 통칭해서
+ c는 character장치로서 마우스 모니터 처럼 데이터를 byte단위로 주고 받는다
+ 
+ chmod 600 foo.txt(이건 걍 이름)
+ 앞의 600이 뭐냐면 앞에서 user,group,others 별로 rwx rwx rwx 있다 했는데 이것을 8진수로 000~111까지로 나태내서 예를들어 권한이 110 110 100은 664이런식으로 표현
+ 그것을 chmod를 써서 600으로 바꾸겠다는 것이다.
+ 다른 방법으로 chmod g+r foo.txt
+ 이것은 group에 대해 read 권한을 부여 -는 뺴는 것이다. 또다르게 go=rw는 group과others에게 read와 write권한을 준다.
+ 
+ /etc/passwd : user 정보
+ /etc/group : group에 대한 정보
+ 
+ 예를들어 head /etc/passwd 하면 user정보가 나오는데
+ 이런식으로 나온다(걍 루트로 예시 든거) root(유저): x(비번인데 암호화되어 다른파일): 0(유저id):0(group id): root(text로 보여주는 user name): /root(home dir): /bin/bash (어떤 shell 띄울건지)
+ 그룹정보 head /etc/group
+ root(그룹이름) : x(암호화) : 0(그룹 id):
+ 
+ 사용자 바꾸고 싶을때
+ su -l(생략가능) root(이거 유저로 수행하겠따)
+ 그럼 password물음
+ 
+ sudo (여기 사용자명 안적으면 root로 수행하겠다.) passwd(명령어) root : sudo권한으로 root passward바꾼다.
+ 이떄 치라고 하는 passward는 ICE의 비번
+ 이렇게 하면 root뭘로 바꿀지 물어보고 root비번 바꿔주면
+ su root 할 수 있다. -> 이렇게 하면 프롬프트 모양이 $에서 #으로 바뀜(조심해라) root는 마스터 키 이다.
+ 
+ cd (아무것도 안치면) : 홈디렉토리로 이동
+ root의 홈디렉토리는 /root (pwd로도 알 수 있음)
+ 루트 권한 빠져나가고 싶으면 exit ( shell을 빠져나온다)
+ 
+ 파일당으로도 조절 할 수있다
+ sudo chown(changeowner,파일 소유자변경) root(이걸로) ls.txt(이거를)
+ 그룹도 가능 chgrp(change group)
+ sudo chown ice.root(앞에서 부터 유저 그룹을 이걸로 바꾸겠다 한번에) ls.txt
+ 
+ **Process
+ 리눅스 프로세서 명령어
+ *ps: 어떤 프로세서가 실행되고 있는지 알아보는
+ ps x : 시스템 전체 프로세서 리스트
+ ps x | wc 의 줄수가 프로세서의 개수
+ 출력창에 R은 실행중 S는 sleep D는 interrupt가 불가능한 sleep상태 T는 종료된 프로세스 Z는 좀비프로세스 < 는 우선순위 높은 프로세서 N은 우선순위 낮은 프로세서
+ ps aux : 현재 정보 더 자세히 
+ *top : 현재 실행중 프로세서 통계정보를 실시간 보여줌
+ *jobs : 백그라운드로 실행되는 job들이 몇개 있는지
+ *bg : 어떤 프로그램을 백그라운드로 바꿔라
+ *fg : 어떤 프로그램을 f그라운드로 바꿔라
+ *kill : 어떤 프로세서 종료시켜라
+ *kill all : 모든 프로세서 종료
+ *shutdown : 리눅스 시스템 전체 종료 shutdown -c : 취소, shutdown now 즉시
+ 
+ xlogo 하면 뭔 엑스사진 나옴 이게 forground로 실행중이다. 여기서 Ctrl-c누르면 끝남
+ 이럴떄 /bin/bash가 부모이고 xlogo가 자식인데 for로 띄우면 부모 동작을 못한다. 이걸 백그라운드에서 수행 시키려면
+ xlogo & : 백그라운드 실행, 부모 동작됨 (그냥 1개의 독립된 걸로 만들어 준거임) 이거 종료할떈 kill -9(종료 옵션) 3637(pid, 모르면 ps해보기)
+ 
+ 다시 forground로 xlogo띄우고 -> Ctrl+z누르면( 실행정지됨) -> bg하면 정지된것이 백그라운드로 실행
+ *pstree : ps의 관계도 보여줌
+ 
+ Virtual memory
+ 물리적 memory + swap(disk에 잠시 넣어둔거, mm실행에 방해되고 필요 없으니까)
+ vmstat하면 이러한 메모리 어디 몇이 있는지 보여줌
+ 
+ 
+ 
+ 
+ 
+ 
+
