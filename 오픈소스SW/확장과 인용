@@ -1,0 +1,28 @@
+echo 하면 그냥 뒤에 있는거 문자열을 화면에 찍어주는거(단순 디렉토리 명이나 문자열만 화면출력 아니라 산술식도 계산)
+~$ ls * 하면 홈디렉토리 안의 디렉토리 리스트 보여줌
+근데 echo* 하면 ls * 나왔던것들 그냥 똑같이 보여줌(리스트화됨)
+echo[[:upper:]]* 대문자로 시작하는거 list
+
+echo $((2+2))하면 4출력
+/는 정수몫만 %는나머지 5**2는 5의제곱
+$(($((5**2))*3)) = 75
+문자열과 섞어서도 표현가능
+
+echo Front-{A,B,C}-Back(A,B,C띄워쓰면 안됨) 하면 Front-A-Back Front-B-Back Front-C-Back이 출력
+echo Number_{1..5} 라하면 Number_1 Number_2 이런식으로 계속 나옴
+echo a{A{1,2},B{3,4}}b 라하면 aA1b aA2b aB3b aB4b 이렇게 나옴
+
+mkdir {2009..2011}-0{1..9}{2009..2011}-{10..12} 하면 2009-01 부터 2011-12까지 쭉 나옴
+
+echo $USER 하면 유저명 알 수 있다.
+printenv 하면 환경변수가 출력 printenv | less 하면 내용 자세히 볼 수 있다.
+$ 뒤에 환경변수 -> shell에 지정할 수 있다.
+
+예) cp어딧는지 찾으려고 which cp 후 ls -l /bin/cp 이렇게 말고
+바로 ls -l $(which cp)하면 됨
+
+file $(ls /usr/bin/* | grep zip) 저 경로에 zip이 들어가있는 파일 리스트를 보여주고 설명해라
+ls -l 'which cp' ''이거 안이 수행된다. 실행결과는 문자열
+
+echo 스페이스 존나 띄워도 무시됨 하지만 ""이거 안에 만들면 무시안됨.
+echo The total is $100.00 이라 하면  The total is 00.00으로 출력된다 $1이 인지인데 여기서 없어서 
