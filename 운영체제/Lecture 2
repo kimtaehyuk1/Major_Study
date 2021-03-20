@@ -50,8 +50,39 @@ fork = spawning = creat(과제에서 라이브러리써서 Tread부르는거 처
 os가 이 3가지 경우에만 돈다
 Interrupt,Trap,System call 이 부분의 자세한 부부은 프린트로 복습은 했으나 조금 에매한 부분을 더 공부후 
 
+app 입장에서는 os많이 도는게 좋은게 아니다.우리는 어플리케이션을 사용하고 싶지, 즉 os는 위 3가지일때만 돈다.
 
+*System call(ABI) - 이건 running하고 있는 놈 땜에
+라이브러리 쓰기위해서 os안에 system call써서 그러느낌
+I/O Request 도 이거중에 1개이다. 예를들어 scanf,printf 
+그럼 dispatcher가 돈다 돌아서 딴거 돌리려고
 
+*interrupt - running 하고 있는 놈땜에 생기는거 아니다 외부요인에 의해
+#참고#
+박찬호 선수를 CPU라고 생각해보자. CPU가 방송 프로그램에 나와 입담을 가동하고 계시다.
+한 학생이 용기를 내어서 박찬호 선수의 말을 끊는다.
+"저 질문이 있습니다!"
+바로 이 학생이 한 행동을 인터럽트(interrupt)라고 한다. 즉, CPU의 정상적인 프로그램 실행 을 방해했다는 의미다. 이때 박찬호 선수는 질문을 먼저 처리하고, 다시 원래 했던 얘기로 돌아가 입답을 펼칠 것이다.
+
+HW interrupt
+time out발생시킴(os가 예약) 그래야 프로세서 스위칭 가능 (여러개 도는 환상 제공)
+I/O 장치가 일 끝냈다고 알려준다.(그럼 운영체제 돌 수 있다.)
+비동기적이다(언제 돌아 올지 모른다.)
+cpu,memory fault일때 interrupt보낸다.
+
+*Trap(내부적 인터룹트)
+cpu가 발생시킨다.
+sw interrupt로 본다.
+exception
+지금 돌고있는것이 잘못해서 
+
+*Mode Switching
+interrupt가 발생해도 프로세서는 수행하던거 있으면 끝까지 처리하고 다음꺼
+pc가 위 3경우일때 먼저 처리하게 핸들러껄로 pc바꾼다. 이때 커널모드로 바꿈
+
+*프로세서 스위칭이 일어날떄
+프로세서의 문맥 즉 cpu안의 레지스터값들을 저장해놔야지만 인터럽트가 발생했을때 다시 돌아갈 수있다. 이걸 어디다? 답은 PCB안에 cpu레지스터값 복사해 놓는 칸에 넣어 놓는다.
+만약 I/O Request땜에 쫓겨나는 거면 Blocked Queue에 넣다. Time Out이면 ready큐에
 
 
 
