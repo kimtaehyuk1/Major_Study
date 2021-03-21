@@ -63,6 +63,9 @@ PSTN(공중 전화망) - 한줄로 여러 사람이 나눠씀 (sharing-> TDM/FDM
 
 *음성신호 압축 (우리의 목표 : 자원 나눠쓰느거)
 PCM(pulse code modulation) 64kbps(1초에 8000번 1번에 8비트씩) 초창기 음성 디지털 전송로 장거리 전송로 T1, E1(전송로 이름이다 T1은 줄 1개로 24명 E1은 줄1개로 30명 쓸 수 있다.)
-ADPCM 걍 PCM을 반으로 줄이는 거다라고만 기억 32kbps
+ADPCM 걍 PCM을 반으로 줄이는 거다라고만 기억 32kbps , ARS 지하철 음성 시스템
 AMR(adaptive multi-rate) 이동 인터넷전화 8kbps~13kbps
 AMR-WB로 고품질 HD-voice 32~64kbps
+
+EVS - 유선전화는 사람 말만 담으려고 그렇게 설계됬는데 여기다 음악을 틀어줘 버리면 7kHz가 벗어 나버린다 그래서
+이놈은 7kHz에 있으면서 음악 상황에 따라 20kHz도 왔다갔다 바꿔준다.
